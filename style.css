@@ -1,0 +1,99 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+html,body{
+    height: 100%;
+    width: 100%;
+    
+}
+
+#main{
+    height: 100%;
+    width: 100vw;
+    display: flex;
+}
+#search{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+    gap: 5%;
+    padding-left: 100px;
+}
+#search h1{
+    font-size: 4rem;
+}
+form input{
+    outline: none;
+    height: 50px;
+    width: 350px;
+    padding-left: 10px;
+    font-size: 1.5em;
+    border: 1px solid #5792ff;
+    border-radius: 20px
+}
+form button{
+    height: 50px;
+    width: 150px;
+    font-size: 1.5em;
+    margin: 0px 15px;
+    border: none;
+    border-radius: 20px;
+    background-color: #5792ff;
+    color: white;
+    cursor: pointer;
+}
+form button:hover{
+    background-color: #3b6bbf;
+}
+a{
+    text-decoration: none;
+    color: white;
+    font-size: 1em;
+    background-color: #000000;
+    padding: 10px;
+    border-radius: 20px;
+    margin-top: 100px;
+}
+a:hover{
+    background-color: #3d3d3d;
+}
+#result{
+    height: 100%;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+#card{
+    height: 80%;
+    width: 70%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    border: 2px solid #6a6a6a;
+    border-radius: 40px;
+}
+#card img{
+    height: 250px;
+    width: 250px;
+    border-radius: 30px;
+    background-color: #d3d3d3;
+}
+#card h2{
+    font-size: 2rem;
+}
+#card h3{
+    color: #3d3d3d;
+}
+#card .details{
+    display: flex;
+    gap: 10px;
+}
