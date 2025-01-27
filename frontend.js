@@ -21,7 +21,6 @@ function fetchData(){
       })
       .then((data) => {
         console.log("Fetched data:", data);
-        var user = data;
         displayData(data);
       })
       .catch((error) => {
@@ -37,5 +36,3 @@ function displayData(data){
   document.querySelector("#following").innerHTML = data.following;
   document.querySelector("#repos").innerHTML = data.public_repos;
 }
-
-export { user };
