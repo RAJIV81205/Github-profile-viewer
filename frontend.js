@@ -12,10 +12,12 @@ function fetchData(){
     console.log("Username:", userName);
     console.log("Backend URL:", backendUrl);
 
-    fetch(backendUrl)
-      .then(response => {
+    fetch(backendUrl, {
+      method: "POST", // Ensure this is a POST request
+    })
+      .then((response) => {
         if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
         return response.json();
       })
@@ -25,6 +27,9 @@ function fetchData(){
       })
       .catch((error) => {
         console.error("Error fetching data:", error);
+        document.querySelector(
+          "#result"
+        ).innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
       });
 }
 

@@ -26,14 +26,14 @@ app.post("/user/:userName", async (req, res) => {
 
     if (existingUser) {
       existingUser.set({
-        name,
-        avatar: avatar_url,
-        followers,
-        following,
-        repos: public_repos,
-      });
-      
-      await existingUser.save();
+      name,
+      avatar: avatar_url,
+      followers,
+      following,
+      repos: public_repos,
+    });
+
+    await existingUser.save();
       res.status(200).json(existingUser);
     }
     else{
@@ -46,12 +46,12 @@ app.post("/user/:userName", async (req, res) => {
         repos: public_repos,
       });
 
-      await user.save();
-      res.status(201).json(user);
+      await user.save(); // Save the new user to the database
+      res.status(201).json(user); // Return the newly created user
     }
-  
   } catch (err) {
-    res.status(400).send("Error while creating user : " + err.message);
+    console.error("Error in POST /user/:userName:", err);
+    res.status(400).send("Error while creating/fetching user: " + err.message);
   }
 });
 
