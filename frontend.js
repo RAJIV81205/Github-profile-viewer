@@ -2,8 +2,8 @@ const submit = document.querySelector('#submit');
 
 submit.addEventListener("click", (event) => {
   event.preventDefault();
-    fetchData();
-    document.querySelector("#username").value = "";
+  fetchData();
+  document.querySelector("#username").value = "";
 })
 
 function fetchData(){
