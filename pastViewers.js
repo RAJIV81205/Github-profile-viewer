@@ -27,7 +27,7 @@ function displayUsers(users) {
     card.innerHTML = `
             <img src="${user.avatar}" alt="${user.name}" class="avatar">
             <div class="details">
-                <h2>Name: ${user.name}</h2>
+                <h2>${user.name}</h2>
             </div>
             <div class="details">
                 <h3>Username: ${user.userName}</h3>

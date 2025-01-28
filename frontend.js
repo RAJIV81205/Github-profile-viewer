@@ -29,7 +29,7 @@ function fetchData(){
         console.error("Error fetching data:", error);
         document.querySelector(
           "#result"
-        ).innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+        ).innerHTML = `<p style="color: red; font-size:2em">Enter proper github username</p>`;
       });
 }
 
