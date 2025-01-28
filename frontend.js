@@ -1,18 +1,18 @@
 const submit = document.querySelector('#submit');
 
-submit.addEventListener("click", () => {
+submit.addEventListener("click", (event) => {
   event.preventDefault();
     fetchData();
     document.querySelector("#username").value = "";
 })
 
 function fetchData(){
-    const username = document.querySelector("#username").value;
-    let gitUrl = `https://api.github.com/users/${username}`;
-    console.log("Username:", username);
-    console.log("GitHub URL:", gitUrl);
+    const userName = document.querySelector("#username").value;
+    let backendUrl = `http://localhost:7777/user/${userName}`;
+    console.log("Username:", userName);
+    console.log("Backend URL:", backendUrl);
 
-    fetch(gitUrl)
+    fetch(backendUrl)
       .then(response => {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -29,10 +29,10 @@ function fetchData(){
 }
 
 function displayData(data){
-  document.querySelector("#avatar").src = data.avatar_url;
+  document.querySelector("#avatar").src = data.avatar;
   document.querySelector("#name").innerHTML = data.name;
-  document.querySelector("#user").innerHTML = data.login;
+  document.querySelector("#user").innerHTML = data.userName;
   document.querySelector("#followers").innerHTML = data.followers;
   document.querySelector("#following").innerHTML = data.following;
-  document.querySelector("#repos").innerHTML = data.public_repos;
+  document.querySelector("#repos").innerHTML = data.repos;
 }
