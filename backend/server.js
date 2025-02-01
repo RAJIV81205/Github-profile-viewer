@@ -4,6 +4,7 @@ import User from "./model.js";
 import cors from "cors";
 
 const app = express();
+const PORT = process.env.PORT || 7777;
 app.use(express.json());
 app.use(cors());
 
@@ -17,7 +18,6 @@ app.post("/user/:userName", async (req, res) => {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    console.log(data);
 
     const { name, login, avatar_url, followers, following, public_repos } =
       data;
@@ -26,17 +26,16 @@ app.post("/user/:userName", async (req, res) => {
 
     if (existingUser) {
       existingUser.set({
-      name,
-      avatar: avatar_url,
-      followers,
-      following,
-      repos: public_repos,
-    });
+        name,
+        avatar: avatar_url,
+        followers,
+        following,
+        repos: public_repos,
+      });
 
-    await existingUser.save();
+      await existingUser.save();
       res.status(200).json(existingUser);
-    }
-    else{
+    } else {
       const user = new User({
         name,
         userName: login,
@@ -85,7 +84,7 @@ app.get("/user", async (req, res) => {
 connectDB()
   .then(() => {
     console.log("Database connected");
-    app.listen(7777, () => {
+    app.listen(PORT, () => {
       console.log("Server running on port 7777");
     });
   })
