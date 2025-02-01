@@ -2,10 +2,12 @@ import express from "express";
 import connectDB from "./database.js";
 import User from "./model.js";
 import cors from "cors";
+import path from "path";
 
 const app = express();
 const PORT = process.env.PORT || 7777;
 app.use(express.json());
+app.use(express.static(path.join("../frontend")));
 app.use(cors());
 
 app.post("/user/:userName", async (req, res) => {
