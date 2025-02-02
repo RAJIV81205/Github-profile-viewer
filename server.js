@@ -16,9 +16,7 @@ app.post("/user/:userName", async (req, res) => {
     let gitUrl = `https://api.github.com/users/${userName}`;
 
     const response = await fetch(gitUrl);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    
     const data = await response.json();
 
     const { name, login, avatar_url, followers, following, public_repos } =
