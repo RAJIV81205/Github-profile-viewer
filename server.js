@@ -10,65 +10,6 @@ app.use(express.json());
 app.use(express.static(path.join("./frontend")));
 app.use(cors());
 
-app.post("/user/:userName", async (req, res) => {
-  try {
-    const userName = req.params?.userName;
-    let gitUrl = `https://api.github.com/users/${userName}`;
-
-    const response = await fetch(gitUrl);
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
-    const data = await response.json();
-
-    const { name, login, avatar_url, followers, following, public_repos } =
-      data;
-
-    const existingUser = await User.findOne({ userName: login });
-
-    if (existingUser) {
-      existingUser.set({
-        name,
-        avatar: avatar_url,
-        followers,
-        following,
-        repos: public_repos,
-      });
-
-      await existingUser.save();
-      res.status(200).json(existingUser);
-    } else {
-      const user = new User({
-        name,
-        userName: login,
-        avatar: avatar_url,
-        followers,
-        following,
-        repos: public_repos,
-      });
-
-      await user.save(); // Save the new user to the database
-      res.status(201).json(user); // Return the newly created user
-    }
-  } catch (err) {
-    console.error("Error in POST /user/:userName:", err);
-    res.status(400).send("Error while creating/fetching user: " + err.message);
-  }
-});
-
-app.get("/user/:userName", async (req, res) => {
-  try {
-    const userName = req.params?.userName;
-    const user = await User.findOne({ userName });
-    if (!user) {
-      res.status(404).send("No users found");
-    } else {
-      res.json(user);
-    }
-  } catch (err) {
-    res.status(400).send("Error while fetching users");
-  }
-});
 
 app.get("/user", async (req, res) => {
   try {
@@ -82,6 +23,34 @@ app.get("/user", async (req, res) => {
     res.status(400).send("Error while fetching users");
   }
 });
+
+app.post("/save-data", async (req, res) => {
+  try {
+    const { userdata } = req.body; 
+
+    if (!userdata) {
+      return res.status(400).json({ error: "Invalid request, missing userdata" });
+    }
+
+    const { avatar, name, userName, followers, following, repos } = userdata;
+
+    
+    const user = await User.findOneAndUpdate(
+      { userName }, 
+      { name, avatar, followers, following, repos }, 
+      { new: true, upsert: true } 
+    );
+
+    return res.status(200).json({
+      message: "User data saved successfully",
+      user,
+    });
+  } catch (error) {
+    console.error("Error saving user:", error);
+    return res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 
 connectDB()
   .then(() => {

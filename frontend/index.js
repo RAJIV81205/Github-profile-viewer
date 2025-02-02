@@ -6,38 +6,67 @@ submit.addEventListener("click", (event) => {
   document.querySelector("#username").value = "";
 })
 
-function fetchData(){
-    const userName = document.querySelector("#username").value;
-    let backendUrl = `https://github-profile-viewer-jbh7.onrender.com/user/${userName}`;
-    console.log("Username:", userName);
-    console.log("Backend URL:", backendUrl);
 
-    fetch(backendUrl, {
-      method: "POST", // Ensure this is a POST request
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log("Fetched data:", data);
-        displayData(data);
-      })
-      .catch((error) => {
-        console.error("Error fetching data:", error);
-        document.querySelector(
-          "#result"
-        ).innerHTML = `<p style="color: red; font-size:2em">Enter proper github username</p>`;
-      });
+
+async function fetchData() {
+  const userName = document.querySelector("#username").value;
+  try {
+    const response = await fetch(`https://api.github.com/users/${userName}`);
+    const data = await response.json();
+    if (response.ok) {
+      displayData(data)
+      await saveData(data)
+
+    }
+
+    return;
+
+
+  } catch (error) {
+    console.error(error)
+
+  }
 }
 
-function displayData(data){
-  document.querySelector("#avatar").src = data.avatar;
+function displayData(data) {
+  document.querySelector("#avatar").src = data.avatar_url;
   document.querySelector("#name").innerHTML = data.name;
-  document.querySelector("#user").innerHTML = data.userName;
+  document.querySelector("#user").innerHTML = data.login;
   document.querySelector("#followers").innerHTML = data.followers;
   document.querySelector("#following").innerHTML = data.following;
-  document.querySelector("#repos").innerHTML = data.repos;
+  document.querySelector("#repos").innerHTML = data.public_repos;
+}
+
+async function saveData(data) {
+
+  const userdata = {
+    avatar: data.avatar_url,
+    name: data.name,
+    userName: data.login,
+    followers: data.followers,
+    following: data.following,
+    repos: data.public_repos,
+
+  }
+  try {
+    const response = await fetch("https://github-profile-viewer-jbh7.onrender.com/save-data", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ userdata }) 
+    });
+    
+    const data = await response.json()
+    if (response.ok) {
+      console.log(data)
+      alert(data.message)
+    }
+
+    return;
+  } catch (error) {
+    console.error(error)
+
+  }
+
 }
