@@ -1,7 +1,7 @@
 // Fetch all users from the backend
 async function fetchAllUsers() {
   try {
-    const response = await fetch("https://github-profile-viewer-backend.onrender.com");
+    const response = await fetch("http://localhost:7777/user");
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
