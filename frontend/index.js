@@ -8,7 +8,7 @@ submit.addEventListener("click", (event) => {
 
 function fetchData(){
     const userName = document.querySelector("#username").value;
-    let backendUrl = `http://localhost:7777/user/${userName}`;
+    let backendUrl = `https://github-profile-viewer-jbh7.onrender.com/user/${userName}`;
     console.log("Username:", userName);
     console.log("Backend URL:", backendUrl);
 
